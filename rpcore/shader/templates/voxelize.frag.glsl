@@ -37,12 +37,15 @@
 %inout%
 
 // Voxel data
+#if HAVE_PLUGIN(vxgi)
 uniform vec3 voxelGridPosition;
 uniform writeonly image3D RESTRICT VoxelGridDest;
+#endif
 
 #pragma include "includes/nonviewspace_shading_pipeline.inc.glsl"
 
 void main() {
+#if HAVE_PLUGIN(vxgi)
     vec2 texcoord = vOutput.texcoord;
     MaterialBaseInput mInput = get_input_from_p3d(p3d_Material);
 
@@ -71,4 +74,5 @@ void main() {
 
     // Write voxel
     imageStore(VoxelGridDest, vs_icoord, vec4(combined_lighting, 1.0));
+#endif
 }
